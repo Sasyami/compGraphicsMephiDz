@@ -6,47 +6,35 @@
 
 using namespace cv;
 using namespace std; 
-
-double B(double a, double b){
-    double c = a*b;
-    return c;
+int min(int a,int b){
+    if (a>b){
+        return b;
+    }
+    return a;
 }
-
-Mat blendGRAY(Mat a, Mat b, Mat alpha){
-    Mat c(a);
-    for (int i = 0;i<a.rows; ++i){
-        for (int j = 0;j<a.cols; ++j){
-            double av = a.at<uchar>(i,j)*1./255;
-            double bv = b.at<uchar>(i,j)*1./255;
-            double alphav1 = alpha.at<uchar>(i,j)*1./255;
-            double alphav2 = 1-alpha.at<uchar>(i,j)*1./255;
-            c.at<uchar>(i,j) = (int)255*((1-alphav1)*alphav2*av+ alphav1*(1-alphav2)*bv + alphav1*alphav2*B(av,bv));
+void circilize(Mat* mat){
+    for (int i = 0;i<mat->rows;++i){
+        for (int j = 0; j<mat->cols;++j){
+            Vec4b buf = mat->at<Vec4b>(i,j);
+            
+            int r = min(mat->rows,mat->cols)*1./2.;
+            if ((mat->rows/2. -i)*(mat->rows/2. -i)+(mat->cols/2. -j)*(mat->cols/2. -j)>r*r){
+                buf[3] = 0;
+            }
+            mat->at<Vec4b>(i,j) = buf;
+           
+            
         }
     }
-    return c;
+
 }
-
 int main(){
-
     Mat alpha = imread("alpha.jpg", 
                        IMREAD_GRAYSCALE); 
+    Mat alphaRGBA;
+    cvtColor(alpha,alphaRGBA,COLOR_GRAY2RGBA);
+    circilize(&alphaRGBA);
     
-    // Error Handling 
-    
-    Mat image1 = imread("image1.jpg", 
-                       IMREAD_GRAYSCALE); 
-    Mat image2 = imread("image2.jpg", 
-                       IMREAD_GRAYSCALE); 
-    
-    
-    
-    
-    // Show Image inside a window with 
-    // the name provided 
-    imwrite("Output.jpg", blendGRAY(image1,image2,alpha)); 
-  
-    // Wait for any keystroke 
-    
-    return 0; 
-
+    imwrite("output1.png",alphaRGBA);
+    //circilize(alphaRGBA);
 }
