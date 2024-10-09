@@ -19,7 +19,7 @@ Mat blendGRAY(Mat a, Mat b, Mat alpha){
             double av = a.at<uchar>(i,j)*1./255;
             double bv = b.at<uchar>(i,j)*1./255;
             double alphav1 = alpha.at<uchar>(i,j)*1./255;
-            double alphav2 = 1-alpha.at<uchar>(i,j)*1./255;
+            double alphav2 = alpha.at<uchar>(i,j)*1./255;
             c.at<uchar>(i,j) = (int)255*((1-alphav1)*alphav2*av+ alphav1*(1-alphav2)*bv + alphav1*alphav2*B(av,bv));
         }
     }
