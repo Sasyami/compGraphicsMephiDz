@@ -33,18 +33,17 @@ int main(){
     
     // Error Handling 
     
-    Mat image = Mat(alpha.rows, alpha.cols, IMREAD_GRAYSCALE);
     Mat image1 = imread("image1.jpg", 
                        IMREAD_GRAYSCALE); 
     Mat image2 = imread("image2.jpg", 
                        IMREAD_GRAYSCALE); 
     
-    cout<<image1.rows<<endl;
+    
     
     
     // Show Image inside a window with 
     // the name provided 
-    imwrite("WindowName.jpg", blendGRAY(image1,image2,alpha)); 
+    imwrite("Output.jpg", blendGRAY(image1,image2,alpha)); 
   
     // Wait for any keystroke 
     
