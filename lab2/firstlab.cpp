@@ -10,7 +10,7 @@ using namespace std;
 int findClosest(int* array, int len, int val){
     int diff = INT_MAX;
     for (int i = 0; i<len;++i){
-        if (abs(array[i] - val)<diff){
+        if (abs(array[i] - val)<=diff){
             diff = abs(array[i] - val);
         }else{
             return i-1;
@@ -21,12 +21,14 @@ int findClosest(int* array, int len, int val){
 } 
 Mat dizz(Mat mat, int n){
     Mat nmat(mat);
-    int len = 2^n;
+    int len = (int)pow(2.,(double)n);
     int vals[len];
-    
     int error = 0;
-    for (int i =0;i<len;++i){
-        vals[i] = (int)(255./len*i);
+    
+    for (int i =0; i<len ;++i){
+        
+        vals[i] = (int)(255./(len-1)*i);
+        
     }
     
     for (int i = 0; i<nmat.rows-1; ++i){
@@ -54,5 +56,5 @@ int main(){
                        IMREAD_GRAYSCALE); 
     
     
-    imwrite("output1.png",dizz(image1,1));
+    imwrite("output1.png",dizz(image1,4));
 }
