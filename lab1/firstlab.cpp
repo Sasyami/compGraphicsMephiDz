@@ -28,6 +28,7 @@ void circilize(Mat* mat){
     }
 
 }
+
 int main(){
     Mat alpha = imread("image1jpg", 
                        IMREAD_GRAYSCALE); 
@@ -35,6 +36,7 @@ int main(){
     cvtColor(alpha,alphaRGBA,COLOR_GRAY2RGBA);
     circilize(&alphaRGBA);
     
-    imwrite("output1.png",alphaRGBA);
+    imwrite("circilized.png",alphaRGBA);
+   
     //circilize(alphaRGBA);
 }
