@@ -56,5 +56,5 @@ int main(){
                        IMREAD_GRAYSCALE); 
     
     
-    imwrite("output1.png",dizz(image1,4));
+    imwrite("output1.png",dizz(image1,2));
 }

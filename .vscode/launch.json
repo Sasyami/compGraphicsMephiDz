@@ -1,0 +1,16 @@
+{
+    
+    "configurations": [
+        {
+            "name": "Opencv launch",
+            "type":"cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/*",
+            "cwd":"${workspaceFolder}",
+            "environment":[{
+                "LD_LIBRARY_PATH": "${LD_LIBRARY_PATH}:/usr/local/lib"
+            }]
+
+        }
+    ]
+  }
