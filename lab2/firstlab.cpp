@@ -21,24 +21,31 @@ int findClosest(int* array, int len, int val){
 } 
 Mat dizz(Mat mat, int n){
     Mat nmat(mat);
+    Mat orig = mat.clone();
     int len = (int)pow(2.,(double)n);
     int vals[len];
     int error = 0;
-   
+    
+    
     for (int i =0; i<len ;++i){
         
         vals[i] = (int)(255./(len-1)*i);
+        
         
     }
     
     for (int i = 0; i<nmat.rows-1; ++i){
         for (int j = 1;j <nmat.cols-1;++j){
+            
             error = nmat.at<uchar>(i,j) - vals[findClosest(vals,len,nmat.at<uchar>(i,j))];
+            
             nmat.at<uchar>(i,j) = vals[findClosest(vals,len,nmat.at<uchar>(i,j))];
-            nmat.at<uchar>(i,j+1) += (int)(7./16.*error);
-            nmat.at<uchar>(i+1,j-1) += (int)(3./16.*error);
-            nmat.at<uchar>(i+1,j) += (int)(5./16.*error);
-            nmat.at<uchar>(i+1,j+1) += (int)(1./16.*error);
+            
+            nmat.at<uchar>(i,j+1) = std::max(0, std::min(255,(int)nmat.at<uchar>(i,j+1) + (7*error/16)));
+            nmat.at<uchar>(i+1,j-1) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+1,j-1) + (3*error/16)));
+            nmat.at<uchar>(i+1,j) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+1,j) + (5*error/16)));
+            nmat.at<uchar>(i+1,j+1) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+1,j+1) + (1*error/16)));
+            
             
         }
     }
@@ -57,6 +64,7 @@ Mat dizz(Mat mat, int n){
 
 Mat dizzSnake(Mat mat, int n){
     Mat nmat(mat);
+    
     int len = (int)pow(2.,(double)n);
     int vals[len];
     int error = 0;
@@ -71,13 +79,13 @@ Mat dizzSnake(Mat mat, int n){
     int dir = 1;
     for (int i = 0; i<nmat.rows-1; ++i){
         for (int j = start;j != end+dir;j = j+dir){
-
+            
             error = nmat.at<uchar>(i,j) - vals[findClosest(vals,len,nmat.at<uchar>(i,j))];
             nmat.at<uchar>(i,j) = vals[findClosest(vals,len,nmat.at<uchar>(i,j))];
-            nmat.at<uchar>(i,j+dir) += (int)(7./16.*error);
-            nmat.at<uchar>(i+1,j-dir) += (int)(3./16.*error);
-            nmat.at<uchar>(i+1,j) += (int)(5./16.*error);
-            nmat.at<uchar>(i+1,j+dir) += (int)(1./16.*error);
+            nmat.at<uchar>(i,j+dir) = std::max(0, std::min(255,(int)nmat.at<uchar>(i,j+dir) + (7*error/16)));
+            nmat.at<uchar>(i+1,j-dir) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+1,j-dir) + (3*error/16)));
+            nmat.at<uchar>(i+1,j) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+1,j) + (5*error/16)));
+            nmat.at<uchar>(i+1,j+dir) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+1,j+dir) + (1*error/16)));
             
         }
         std::swap(start, end);
@@ -113,6 +121,7 @@ Mat stucki(Mat mat, int n){
     
     for (int i = 0; i<nmat.rows-2; ++i){
         for (int j = 2;j <nmat.cols-2;++j){
+            
             error = nmat.at<uchar>(i,j) - vals[findClosest(vals,len,nmat.at<uchar>(i,j))];
             nmat.at<uchar>(i,j) = vals[findClosest(vals,len,nmat.at<uchar>(i,j))];
             nmat.at<uchar>(i,j+1) += (int)(8./42.*error);
@@ -147,8 +156,9 @@ int main(){
     Mat image1 = imread("image1.jpg", 
                        IMREAD_GRAYSCALE);
     int n = 2;
-    imwrite("output1.png",dizz(image1,n));
-    imwrite("output1snaked.png",dizzSnake(image1,n));
-    imwrite("output1stucki.png", stucki(image1,n));
+
+    imwrite("output1.png",dizz(image1.clone(),n));
+    imwrite("output1snaked.png",dizzSnake(image1.clone(),n));
+    imwrite("output1stucki.png", stucki(image1.clone(),n));
 
 }
