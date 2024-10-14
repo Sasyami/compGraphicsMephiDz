@@ -24,7 +24,7 @@ Mat dizz(Mat mat, int n){
     int len = (int)pow(2.,(double)n);
     int vals[len];
     int error = 0;
-    
+   
     for (int i =0; i<len ;++i){
         
         vals[i] = (int)(255./(len-1)*i);
@@ -37,24 +37,118 @@ Mat dizz(Mat mat, int n){
             nmat.at<uchar>(i,j) = vals[findClosest(vals,len,nmat.at<uchar>(i,j))];
             nmat.at<uchar>(i,j+1) += (int)(7./16.*error);
             nmat.at<uchar>(i+1,j-1) += (int)(3./16.*error);
-            nmat.at<uchar>(i,j) += (int)(5./16.*error);
-            nmat.at<uchar>(i,j+1) += (int)(1./16.*error);
+            nmat.at<uchar>(i+1,j) += (int)(5./16.*error);
+            nmat.at<uchar>(i+1,j+1) += (int)(1./16.*error);
+            
         }
     }
     for (int i = 0;i<nmat.rows;++i){
         nmat.at<uchar>(i,0) = vals[findClosest(vals,len,nmat.at<uchar>(i,0))];
+        nmat.at<uchar>(i,nmat.cols - 1) = vals[findClosest(vals,len,nmat.at<uchar>(i,nmat.cols - 1))];
 
     }
     for (int j = 1;j<nmat.cols;++j){
         nmat.at<uchar>(nmat.rows-1,j) = vals[findClosest(vals,len,nmat.at<uchar>(nmat.rows-1,j))];
     }
+
+    return nmat;
+
+}
+
+Mat dizzSnake(Mat mat, int n){
+    Mat nmat(mat);
+    int len = (int)pow(2.,(double)n);
+    int vals[len];
+    int error = 0;
+   
+    for (int i =0; i<len ;++i){
+        
+        vals[i] = (int)(255./(len-1)*i);
+        
+    }
+    int start = 1;
+    int end = nmat.cols - 1 -1;
+    int dir = 1;
+    for (int i = 0; i<nmat.rows-1; ++i){
+        for (int j = start;j != end+dir;j = j+dir){
+
+            error = nmat.at<uchar>(i,j) - vals[findClosest(vals,len,nmat.at<uchar>(i,j))];
+            nmat.at<uchar>(i,j) = vals[findClosest(vals,len,nmat.at<uchar>(i,j))];
+            nmat.at<uchar>(i,j+dir) += (int)(7./16.*error);
+            nmat.at<uchar>(i+1,j-dir) += (int)(3./16.*error);
+            nmat.at<uchar>(i+1,j) += (int)(5./16.*error);
+            nmat.at<uchar>(i+1,j+dir) += (int)(1./16.*error);
+            
+        }
+        std::swap(start, end);
+        dir =dir *(-1);
+    }
+
+    for (int i = 0;i<nmat.rows;++i){
+
+        nmat.at<uchar>(i,0) = vals[findClosest(vals, len, nmat.at<uchar>(i,0))];
+        nmat.at<uchar>(i,nmat.cols -1) = vals[findClosest(vals, len, nmat.at<uchar>(i,nmat.cols - 1))];
+        
+    }
+    
+    for (int j = 1;j<nmat.cols;++j){
+        nmat.at<uchar>(nmat.rows-1,j) = vals[findClosest(vals,len,nmat.at<uchar>(nmat.rows-1,j))];
+    }
+    
+    return nmat;
+
+
+}
+Mat stucki(Mat mat, int n){
+    Mat nmat(mat);
+    int len = (int)pow(2.,(double)n);
+    int vals[len];
+    int error = 0;
+   
+    for (int i =0; i<len ;++i){
+        
+        vals[i] = (int)(255./(len-1)*i);
+        
+    }
+    
+    for (int i = 0; i<nmat.rows-2; ++i){
+        for (int j = 2;j <nmat.cols-2;++j){
+            error = nmat.at<uchar>(i,j) - vals[findClosest(vals,len,nmat.at<uchar>(i,j))];
+            nmat.at<uchar>(i,j) = vals[findClosest(vals,len,nmat.at<uchar>(i,j))];
+            nmat.at<uchar>(i,j+1) += (int)(8./42.*error);
+            nmat.at<uchar>(i,j+2) += (int)(4./42.*error);
+            nmat.at<uchar>(i+1,j-2) += (int)(2./42.*error);
+            nmat.at<uchar>(i+1,j-1) += (int)(4./42.*error);
+            nmat.at<uchar>(i+1,j) += (int)(8./42.*error);
+            nmat.at<uchar>(i+1,j+1) += (int)(4./42.*error);
+            nmat.at<uchar>(i+1,j+2) += (int)(2./42.*error);
+            nmat.at<uchar>(i+2,j-2) += (int)(1./42.*error);
+            nmat.at<uchar>(i+2,j-1) += (int)(2./42.*error);
+            nmat.at<uchar>(i+2,j) += (int)(4./42.*error);
+            nmat.at<uchar>(i+2,j+1) += (int)(2./42.*error);
+            nmat.at<uchar>(i+2,j+2) += (int)(1./42.*error);
+        }
+    }
+    for (int i = 0;i<nmat.rows;++i){
+        nmat.at<uchar>(i,0) = vals[findClosest(vals,len,nmat.at<uchar>(i,0))];
+        nmat.at<uchar>(i,1) = vals[findClosest(vals,len,nmat.at<uchar>(i,1))];
+        nmat.at<uchar>(i,nmat.cols -1 ) = vals[findClosest(vals,len,nmat.at<uchar>(i,nmat.cols-1))];
+        nmat.at<uchar>(i,nmat.cols - 2 ) = vals[findClosest(vals,len,nmat.at<uchar>(i,nmat.cols-2))];
+    }
+    for (int j = 2;j<nmat.cols-2;++j){
+        nmat.at<uchar>(nmat.rows-1,j) = vals[findClosest(vals,len,nmat.at<uchar>(nmat.rows-1,j))];
+        nmat.at<uchar>(nmat.rows-2,j) = vals[findClosest(vals,len,nmat.at<uchar>(nmat.rows-2,j))];
+    }
+
     return nmat;
 
 }
 int main(){
     Mat image1 = imread("image1.jpg", 
-                       IMREAD_GRAYSCALE); 
-    
-    
-    imwrite("output1.png",dizz(image1,2));
+                       IMREAD_GRAYSCALE);
+    int n = 2;
+    imwrite("output1.png",dizz(image1,n));
+    imwrite("output1snaked.png",dizzSnake(image1,n));
+    imwrite("output1stucki.png", stucki(image1,n));
+
 }
