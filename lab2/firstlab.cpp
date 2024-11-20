@@ -124,18 +124,18 @@ Mat stucki(Mat mat, int n){
             
             error = nmat.at<uchar>(i,j) - vals[findClosest(vals,len,nmat.at<uchar>(i,j))];
             nmat.at<uchar>(i,j) = vals[findClosest(vals,len,nmat.at<uchar>(i,j))];
-            nmat.at<uchar>(i,j+1) += (int)(8./42.*error);
-            nmat.at<uchar>(i,j+2) += (int)(4./42.*error);
-            nmat.at<uchar>(i+1,j-2) += (int)(2./42.*error);
-            nmat.at<uchar>(i+1,j-1) += (int)(4./42.*error);
-            nmat.at<uchar>(i+1,j) += (int)(8./42.*error);
-            nmat.at<uchar>(i+1,j+1) += (int)(4./42.*error);
-            nmat.at<uchar>(i+1,j+2) += (int)(2./42.*error);
-            nmat.at<uchar>(i+2,j-2) += (int)(1./42.*error);
-            nmat.at<uchar>(i+2,j-1) += (int)(2./42.*error);
-            nmat.at<uchar>(i+2,j) += (int)(4./42.*error);
-            nmat.at<uchar>(i+2,j+1) += (int)(2./42.*error);
-            nmat.at<uchar>(i+2,j+2) += (int)(1./42.*error);
+            nmat.at<uchar>(i,j+1) = std::max(0, std::min(255,(int)nmat.at<uchar>(i,j+1) + (8*error/42)));
+            nmat.at<uchar>(i,j+2) = std::max(0, std::min(255,(int)nmat.at<uchar>(i,j+2) + (4*error/42)));
+            nmat.at<uchar>(i+1,j-2) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+1,j-2) + (2*error/42)));
+            nmat.at<uchar>(i+1,j-1) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+1,j-1) + (4*error/42)));
+            nmat.at<uchar>(i+1,j) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+1,j) + (8*error/42)));
+            nmat.at<uchar>(i+1,j+1) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+1,j+1) + (4*error/42)));
+            nmat.at<uchar>(i+1,j+2) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+1,j+2) + (2*error/42)));
+            nmat.at<uchar>(i+2,j-2) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+2,j-2) + (1*error/42)));
+            nmat.at<uchar>(i+2,j-1) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+2,j-1) + (2*error/42)));
+            nmat.at<uchar>(i+2,j) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+2,j) + (4*error/42)));
+            nmat.at<uchar>(i+2,j+1) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+2,j+1) + (2*error/42)));
+            nmat.at<uchar>(i+2,j+2) = std::max(0, std::min(255,(int)nmat.at<uchar>(i+2,j+2) + (1*error/42)));
         }
     }
     for (int i = 0;i<nmat.rows;++i){

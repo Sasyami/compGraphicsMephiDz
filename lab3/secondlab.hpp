@@ -71,16 +71,16 @@ void drawPolygon(cv::Mat& mat, Polygon p, T color){
 bool isSimple(Polygon p){
     int ax, ay, bx, by,cx,cy,dx,dy,nx,ny;
     double t1,t2;
-    for (int i = 0; i<p.x.size()-1; ++i){
-        for (int j = i+1; j<p.x.size()-1; ++j){
+    for (int i = 0; i<p.x.size(); ++i){
+        for (int j = i+1; j<p.x.size(); ++j){
             ax = (p.x[i]);
             ay = (p.y[i]);
-            bx = (p.x[i+1]);
-            by = (p.y[i+1]);
+            bx = (p.x[(i+1)%p.x.size()]);
+            by = (p.y[(i+1)%p.x.size()]);
             cx = (p.x[j]);
             cy = (p.y[j]);
-            dx = (p.x[j+1]);
-            dy = (p.y[j+1]);
+            dx = (p.x[(j+1)%p.x.size()]);
+            dy = (p.y[(j+1)%p.x.size()]);
             nx = dy - cy;
             ny = -dx + cx;
             if (nx*(bx -ax) + ny*(by-ay) == 0){
@@ -103,38 +103,7 @@ bool isSimple(Polygon p){
         }
 
     }
-    for (int i =0; i<p.x.size()-1;++i){
-            ax = p.x[i];
-            ay = p.y[i];
-            bx = p.x[i+1];
-            by = p.y[i+1];
-            cx = p.x[p.x.size()-1];
-            cy = p.y[p.y.size() -1];
-            dx = p.x[0];
-            dy = p.y[0];
-            
-            nx = dy - cy;
-            ny = -dx + cx; 
-            
-            if((nx*(bx -ax) + ny*(by-ay))!=0){
-                t1 = - (double)(nx*(ax-cx) + ny*(ay-cy))/(double)(nx*(bx -ax) + ny*(by-ay));
-            }else{
-                continue;
-            }
-            
-            nx = by - ay;
-            ny = -bx + ax;
-            if (nx*(dx - cx) + ny*(dy - cy) == 0){
-                continue;
-            }else{
-                t2= - (double)(nx* (cx -ax) + ny * (cy - ay))/(double)(nx*(dx - cx) + ny*(dy - cy));
-            }
-            
-            
-            if ((t1>0 && t1<1) && (t2> 0 && t2<1)){
-                return false;
-            }
-    }
+    
     return true;
 }
 //convT - type for multiplied and substracted values, if it can overflow T max value
@@ -142,10 +111,10 @@ bool isSimple(Polygon p){
 
 bool isConvex(Polygon p ){
 
-    for (int i = 0; i<p.x.size()-1;++i){
+    for (int i = 0; i<p.x.size();++i){
         ClPointType type = NONE;
         for (int j = 0; j<p.x.size(); ++j){
-            ClPointType pt = Classify(p.x[i],p.y[i],p.x[i+1],p.y[i+1],p.x[j],p.y[j]);
+            ClPointType pt = Classify(p.x[i],p.y[i],p.x[(i+1)%p.x.size()],p.y[(i+1)%p.x.size()],p.x[j],p.y[j]);
             if (type == NONE && (pt == LEFT || pt==RIGHT)){
                 type = pt;
             }else if (type != pt && pt!= ORIGIN && pt!=DESTINATION && pt!=BEHIND && pt!=BEYOND && pt!=BETWEEN){
@@ -154,16 +123,7 @@ bool isConvex(Polygon p ){
 
         }
     }
-    ClPointType type = NONE;
-        for (int j = 0; j<p.x.size(); ++j){
-            ClPointType pt = Classify(p.x[p.x.size()-1],p.y[p.y.size()-1],p.x[0],p.y[0],p.x[j],p.y[j]);
-            if (type == NONE && (pt == LEFT || pt==RIGHT)){
-                type = pt;
-            }else if (type != pt && pt!= ORIGIN && pt!=DESTINATION && pt!=BEHIND && pt!=BEYOND && pt!=BETWEEN){
-                return false;
-            }
-
-        }
+    
     return true;
 
 }
