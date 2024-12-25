@@ -24,7 +24,7 @@ void drawLine(Mat& img, Point2f p1, Point2f p2) {
         error = 2 * dy - dx;
         if (iy >= 0) {
             for (int i = 0; i < dx; ++i) {
-                img.at<Vec3b>(img.rows - y, x) = Vec3b(0, 0, 0);
+                img.at<uchar>(img.rows - y, x) = 0;
                 if (error >= 0) {
                     y += iy;
                     error -= 2 * dx;
@@ -35,7 +35,7 @@ void drawLine(Mat& img, Point2f p1, Point2f p2) {
         }
         else {
             for (int i = 0; i < dx; ++i) {
-                img.at<Vec3b>(img.rows - y, x) = Vec3b(0, 0, 0);
+                img.at<uchar>(img.rows - y, x) = 0;
                 if (error > 0) {
                     y += iy;
                     error -= 2 * dx;
@@ -49,7 +49,7 @@ void drawLine(Mat& img, Point2f p1, Point2f p2) {
         error = 2 * dx - dy;
         if (iy >= 0) {
             for (int i = 0; i < dy; ++i) {
-                img.at<Vec3b>(img.rows - y, x) = Vec3b(0, 0, 0);
+                img.at<uchar>(img.rows - y, x) = 0;
                 if (error >= 0) {
                     x += ix;
                     error -= 2 * dy;
@@ -60,7 +60,7 @@ void drawLine(Mat& img, Point2f p1, Point2f p2) {
         }
         else {
             for (int i = 0; i < dy; ++i) {
-                img.at<Vec3b>(img.rows - y, x) = Vec3b(0, 0, 0);
+                img.at<uchar>(img.rows - y, x) = 0;
                 if (error > 0) {
                     x += ix;
                     error -= 2 * dy;
