@@ -10,7 +10,7 @@ float dist(cv::Vec3b a, cv::Vec3f b){
     
     return (a[0]-b[0])*(a[0] - b[0]) + (a[1]-b[1])*(a[1] - b[1]) + (a[2]-b[2])*(a[2] - b[2]);
 }
-void kMeans(cv::Mat& mat, int k){
+void kMeans(cv::Mat& mat, int k, int maxIter = 100){
     
     std::vector<cv::Vec3f> ks = std::vector<cv::Vec3f>();
     int* kis = new int[k];
@@ -21,6 +21,7 @@ void kMeans(cv::Mat& mat, int k){
         ks.emplace_back(buf);
     }
     bool pass = true;
+    int iter = 0;
     while (pass){
         pass = false;
         for (int i = 0; i<k;++i){
@@ -64,9 +65,12 @@ void kMeans(cv::Mat& mat, int k){
 
 
 
+        ++iter;
+        if (iter>=maxIter){
+            break;
+        }
 
-
-        pass = false; //ubrat!!
+        //pass = false; //ubrat!!
     }
     //std::cout<<mat.cols<<std::endl;
     for (int i = 0; i<mat.rows; ++i){

@@ -7,7 +7,9 @@
 #include "fourthlab.hpp"
 
 int main(){
-    cv::Mat mat = cv::Mat(300,300, CV_8UC1,255);
+    cv::Mat mat = cv::Mat(1000,1000, CV_8UC1,255);
+    drawHatchedLine<uchar>(mat, 100,100, 400, 300,5,10,0);
+    cv::imwrite("hatchedline.png", mat);
     /* std::vector<int>a;
     std::vector<int>b;
     a.emplace_back(0);
@@ -26,7 +28,7 @@ int main(){
     
     fillPolygon<uchar>(mat,&PInPolygonNZWMode,p,125);
     cv::imwrite("test.jpg",mat); */
-    
+    mat = cv::Mat(300,300, CV_8UC1,255);
     std::vector<int>a1;
     std::vector<int>b1;
     

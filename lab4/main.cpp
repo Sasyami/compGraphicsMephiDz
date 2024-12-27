@@ -1,6 +1,20 @@
 #include <iostream>
 #include "firstlab.hpp"
 #include "secondlab.hpp"
+void drawDots(cv::Mat& mat, std::vector<int> x, std::vector<int> y, uchar color){
+    for (int i = 0 ; i<x.size(); ++i){
+        mat.at<uchar>(y[i], x[i]) = color;
+        mat.at<uchar>(y[i]-1, x[i]) = color;
+        mat.at<uchar>(y[i], x[i]-1) = color;
+        mat.at<uchar>(y[i]+1, x[i]) = color;
+        mat.at<uchar>(y[i], x[i]+1) = color;
+        mat.at<uchar>(y[i]-2, x[i]) = color;
+        mat.at<uchar>(y[i], x[i]-2) = color;
+        mat.at<uchar>(y[i]+2, x[i]) = color;
+        mat.at<uchar>(y[i], x[i]+2) = color;
+    }
+    
+}
 int main(){
     cv::Mat mat = cv::Mat(500,500, CV_8UC1,255);
     int m = 3;
@@ -22,7 +36,9 @@ int main(){
     y.emplace_back(250);
     y.emplace_back(300);
     y.emplace_back(350);
-    //Bezie(mat,x,y,m,0);//300+100-200=0, 150+50 - 200 =0, 200-2*150 +100 = 0, 400+200-300*2=0
+    Bezie(mat,x,y,m,0);
+
+    drawDots(mat,x,y,125);
     cv::imwrite("bezie3Composite.jpg", mat);
     x = std::vector<int>();
     x.emplace_back(400);
@@ -33,8 +49,10 @@ int main(){
     y.emplace_back(100);
     y.emplace_back(200);
     m=2;
+    
     mat = cv::Mat(500,500, CV_8UC1,255);
-    //Bezie(mat,x,y,m,0);
+    drawDots(mat,x,y,125);
+    Bezie(mat,x,y,m,0);
     cv::imwrite("bezie2.jpg", mat);
     
 
@@ -56,6 +74,7 @@ int main(){
     m=4;
     mat = cv::Mat(500,500, CV_8UC1,255);
     Bezie(mat,x,y,m,0);
+    drawDots(mat,x,y,125);
     cv::imwrite("bezie4.jpg", mat);
 
     double y0 = 0;
@@ -80,13 +99,184 @@ int main(){
     //std::cout<<y0<<" "<<y1<<std::endl;
     drawPolygon<uchar>(mat,p,100);
     drawLine<uchar>(mat,x0,y0,x1,y1,0);
-    cv::imwrite("polygonCut.jpg", mat);
-    
-    //drawLine<uchar>(mat,178,154,176,156,0);
+    cv::imwrite("polygonCut1.jpg", mat);
 
-    //std::cout<<Bezie_rec(x1,0.9,2)<<std::endl;
-    //BezieOne(mat,0, x1,y1,2);
+
+
+    y0 = 400;
+    x0 = 400;
+    x1 = 0;
+    y1 = 0;
+    mat = cv::Mat(500,500, CV_8UC1,255);
+    x = std::vector<int>();
+    x.emplace_back(100);
+    x.emplace_back(100);
+    
+    x.emplace_back(200);
+    x.emplace_back(200);
+    y = std::vector<int>();
+    y.emplace_back(100);
+    y.emplace_back(200);
+    
+    y.emplace_back(200);
+    y.emplace_back(100);
+    p = Polygon(x,y);
+    CyrusBeckClipLine(x0,y0,x1,y1,p);
+    drawPolygon<uchar>(mat,p,100);
+    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    cv::imwrite("polygonCut2.jpg", mat);
+
+
+
+    y0 = 300;
+    x0 = 0;
+    x1 = 300;
+    y1 = 0;
+    mat = cv::Mat(500,500, CV_8UC1,255);
+    x = std::vector<int>();
+    x.emplace_back(100);
+    x.emplace_back(100);
+    
+    x.emplace_back(200);
+    x.emplace_back(200);
+    y = std::vector<int>();
+    y.emplace_back(100);
+    y.emplace_back(200);
+    
+    y.emplace_back(200);
+    y.emplace_back(100);
+    p = Polygon(x,y);
+    CyrusBeckClipLine(x0,y0,x1,y1,p);
+    drawPolygon<uchar>(mat,p,100);
+    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    cv::imwrite("polygonCut3.jpg", mat);
+
+    y0 = 0;
+    x0 = 300;
+    x1 = 0;
+    y1 = 300;
+    mat = cv::Mat(500,500, CV_8UC1,255);
+    x = std::vector<int>();
+    x.emplace_back(100);
+    x.emplace_back(100);
+    
+    x.emplace_back(200);
+    x.emplace_back(200);
+    y = std::vector<int>();
+    y.emplace_back(100);
+    y.emplace_back(200);
+    
+    y.emplace_back(200);
+    y.emplace_back(100);
+    p = Polygon(x,y);
+    CyrusBeckClipLine(x0,y0,x1,y1,p);
+    drawPolygon<uchar>(mat,p,100);
+    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    cv::imwrite("polygonCut4.jpg", mat);
     
     
+    
+
+
+    y0 = 0;
+    x0 = 0;
+    x1 = 400;
+    y1 = 400;
+    mat = cv::Mat(500,500, CV_8UC1,255);
+    x = std::vector<int>();
+    x.emplace_back(200);
+    x.emplace_back(200);
+    x.emplace_back(100);
+    x.emplace_back(100);
+    
+    
+    y = std::vector<int>();
+    y.emplace_back(100);
+    y.emplace_back(200);
+    
+    y.emplace_back(200);
+    y.emplace_back(100);
+    p = Polygon(x,y);
+    CyrusBeckClipLine(x0,y0,x1,y1,p);
+    //std::cout<<y0<<" "<<y1<<std::endl;
+    drawPolygon<uchar>(mat,p,100);
+    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    cv::imwrite("polygonCut5.jpg", mat);
+
+
+
+    y0 = 400;
+    x0 = 400;
+    x1 = 0;
+    y1 = 0;
+    mat = cv::Mat(500,500, CV_8UC1,255);
+    x = std::vector<int>();
+    x.emplace_back(200);
+    x.emplace_back(200);
+    x.emplace_back(100);
+    x.emplace_back(100);
+    
+    
+    y = std::vector<int>();
+    y.emplace_back(100);
+    y.emplace_back(200);
+    
+    y.emplace_back(200);
+    y.emplace_back(100);
+    p = Polygon(x,y);
+    CyrusBeckClipLine(x0,y0,x1,y1,p);
+    drawPolygon<uchar>(mat,p,100);
+    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    cv::imwrite("polygonCut6.jpg", mat);
+
+
+
+    y0 = 300;
+    x0 = 0;
+    x1 = 300;
+    y1 = 0;
+    mat = cv::Mat(500,500, CV_8UC1,255);
+    x = std::vector<int>();
+    x.emplace_back(200);
+    x.emplace_back(200);
+    x.emplace_back(100);
+    x.emplace_back(100);
+    
+    
+    y = std::vector<int>();
+    y.emplace_back(100);
+    y.emplace_back(200);
+    
+    y.emplace_back(200);
+    y.emplace_back(100);
+    p = Polygon(x,y);
+    CyrusBeckClipLine(x0,y0,x1,y1,p);
+    drawPolygon<uchar>(mat,p,100);
+    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    cv::imwrite("polygonCut7.jpg", mat);
+
+    y0 = 0;
+    x0 = 300;
+    x1 = 0;
+    y1 = 300;
+    mat = cv::Mat(500,500, CV_8UC1,255);
+    x = std::vector<int>();
+    x.emplace_back(200);
+    x.emplace_back(200);
+    x.emplace_back(100);
+    x.emplace_back(100);
+    
+    
+    y = std::vector<int>();
+    y.emplace_back(100);
+    y.emplace_back(200);
+    
+    y.emplace_back(200);
+    y.emplace_back(100);
+    p = Polygon(x,y);
+    CyrusBeckClipLine(x0,y0,x1,y1,p);
+    drawPolygon<uchar>(mat,p,100);
+    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    cv::imwrite("polygonCut8.jpg", mat);
 
 }

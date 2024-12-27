@@ -238,9 +238,9 @@ std::vector<Point2f> getContour(std::vector<Point2f> points) {
 
 
 void drawContour(cv::Mat& mat,
-std::vector<Point2f> v, int color ){
+std::vector<Point2f> v, uchar color ){
     for (int  i = 0; i<v.size();++i){
-        drawLine(mat, (uchar)v[i].x, (uchar)v[i].y, (uchar)v[(i+1)%v.size()].x, (uchar)v[(i+1)%v.size()].y, color);
+        drawLine(mat, v[i], v[(i+1)%v.size()]);
     }
 }
 
