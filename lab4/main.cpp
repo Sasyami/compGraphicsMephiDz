@@ -82,6 +82,7 @@ int main(){
     double x1 = 400;
     double y1 = 400;
     mat = cv::Mat(500,500, CV_8UC1,255);
+    drawLine<uchar>(mat,x0,y0,x1,y1,200);
     x = std::vector<int>();
     x.emplace_back(100);
     x.emplace_back(100);
@@ -96,93 +97,19 @@ int main(){
     y.emplace_back(100);
     Polygon p(x,y);
     CyrusBeckClipLine(x0,y0,x1,y1,p);
-    //std::cout<<y0<<" "<<y1<<std::endl;
+   
     drawPolygon<uchar>(mat,p,100);
     drawLine<uchar>(mat,x0,y0,x1,y1,0);
     cv::imwrite("polygonCut1.jpg", mat);
 
 
-
-    y0 = 400;
-    x0 = 400;
-    x1 = 0;
-    y1 = 0;
-    mat = cv::Mat(500,500, CV_8UC1,255);
-    x = std::vector<int>();
-    x.emplace_back(100);
-    x.emplace_back(100);
-    
-    x.emplace_back(200);
-    x.emplace_back(200);
-    y = std::vector<int>();
-    y.emplace_back(100);
-    y.emplace_back(200);
-    
-    y.emplace_back(200);
-    y.emplace_back(100);
-    p = Polygon(x,y);
-    CyrusBeckClipLine(x0,y0,x1,y1,p);
-    drawPolygon<uchar>(mat,p,100);
-    drawLine<uchar>(mat,x0,y0,x1,y1,0);
-    cv::imwrite("polygonCut2.jpg", mat);
-
-
-
-    y0 = 300;
-    x0 = 0;
-    x1 = 300;
-    y1 = 0;
-    mat = cv::Mat(500,500, CV_8UC1,255);
-    x = std::vector<int>();
-    x.emplace_back(100);
-    x.emplace_back(100);
-    
-    x.emplace_back(200);
-    x.emplace_back(200);
-    y = std::vector<int>();
-    y.emplace_back(100);
-    y.emplace_back(200);
-    
-    y.emplace_back(200);
-    y.emplace_back(100);
-    p = Polygon(x,y);
-    CyrusBeckClipLine(x0,y0,x1,y1,p);
-    drawPolygon<uchar>(mat,p,100);
-    drawLine<uchar>(mat,x0,y0,x1,y1,0);
-    cv::imwrite("polygonCut3.jpg", mat);
-
-    y0 = 0;
-    x0 = 300;
-    x1 = 0;
-    y1 = 300;
-    mat = cv::Mat(500,500, CV_8UC1,255);
-    x = std::vector<int>();
-    x.emplace_back(100);
-    x.emplace_back(100);
-    
-    x.emplace_back(200);
-    x.emplace_back(200);
-    y = std::vector<int>();
-    y.emplace_back(100);
-    y.emplace_back(200);
-    
-    y.emplace_back(200);
-    y.emplace_back(100);
-    p = Polygon(x,y);
-    CyrusBeckClipLine(x0,y0,x1,y1,p);
-    drawPolygon<uchar>(mat,p,100);
-    drawLine<uchar>(mat,x0,y0,x1,y1,0);
-    cv::imwrite("polygonCut4.jpg", mat);
-    
-    
-    
-
-
+    // полигон в обратную сторону
     y0 = 0;
     x0 = 0;
     x1 = 400;
     y1 = 400;
     mat = cv::Mat(500,500, CV_8UC1,255);
+    drawLine<uchar>(mat,x0,y0,x1,y1,200);
     x = std::vector<int>();
     x.emplace_back(200);
     x.emplace_back(200);
@@ -198,18 +125,102 @@ int main(){
     y.emplace_back(100);
     p = Polygon(x,y);
     CyrusBeckClipLine(x0,y0,x1,y1,p);
-    //std::cout<<y0<<" "<<y1<<std::endl;
+   
+    drawPolygon<uchar>(mat,p,100);
+    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    cv::imwrite("polygonCut2.jpg", mat);
+
+
+    y0 = 125;
+    x0 = 125;
+    x1 = 175;
+    y1 = 175;
+    mat = cv::Mat(500,500, CV_8UC1,255);
+    drawLine<uchar>(mat,x0,y0,x1,y1,200);
+    x = std::vector<int>();
+    x.emplace_back(200);
+    x.emplace_back(200);
+    x.emplace_back(100);
+    x.emplace_back(100);
+    
+    
+    y = std::vector<int>();
+    y.emplace_back(100);
+    y.emplace_back(200);
+    
+    y.emplace_back(200);
+    y.emplace_back(100);
+    p = Polygon(x,y);
+    CyrusBeckClipLine(x0,y0,x1,y1,p);
+   
+    drawPolygon<uchar>(mat,p,100);
+    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    cv::imwrite("polygonCut3.jpg", mat);
+
+
+
+    y0 = 50;
+    x0 = 100;
+    x1 = 400;
+    y1 = 60;
+
+    mat = cv::Mat(500,500, CV_8UC1,255);
+    drawLine<uchar>(mat,x0,y0,x1,y1,200);
+    x = std::vector<int>();
+    x.emplace_back(200);
+    x.emplace_back(200);
+    x.emplace_back(100);
+    x.emplace_back(100);
+    
+    
+    y = std::vector<int>();
+    y.emplace_back(100);
+    y.emplace_back(200);
+    
+    y.emplace_back(200);
+    y.emplace_back(100);
+    p = Polygon(x,y);
+    CyrusBeckClipLine(x0,y0,x1,y1,p);
+   
+    drawPolygon<uchar>(mat,p,100);
+    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    cv::imwrite("polygonCut4.jpg", mat);
+
+
+
+    y0 = 150;
+    x0 = 150;
+    x1 = 400;
+    y1 = 400;
+    mat = cv::Mat(500,500, CV_8UC1,255);
+    drawLine<uchar>(mat,x0,y0,x1,y1,200);
+    x = std::vector<int>();
+    x.emplace_back(200);
+    x.emplace_back(200);
+    x.emplace_back(100);
+    x.emplace_back(100);
+    
+    
+    y = std::vector<int>();
+    y.emplace_back(100);
+    y.emplace_back(200);
+    
+    y.emplace_back(200);
+    y.emplace_back(100);
+    p = Polygon(x,y);
+    CyrusBeckClipLine(x0,y0,x1,y1,p);
+   
     drawPolygon<uchar>(mat,p,100);
     drawLine<uchar>(mat,x0,y0,x1,y1,0);
     cv::imwrite("polygonCut5.jpg", mat);
 
 
-
-    y0 = 400;
-    x0 = 400;
-    x1 = 0;
-    y1 = 0;
+    y0 = 100;
+    x0 = 100;
+    x1 = 100;
+    y1 = 200;
     mat = cv::Mat(500,500, CV_8UC1,255);
+    drawLine<uchar>(mat,x0,y0,x1,y1,200);
     x = std::vector<int>();
     x.emplace_back(200);
     x.emplace_back(200);
@@ -225,58 +236,11 @@ int main(){
     y.emplace_back(100);
     p = Polygon(x,y);
     CyrusBeckClipLine(x0,y0,x1,y1,p);
+   
     drawPolygon<uchar>(mat,p,100);
     drawLine<uchar>(mat,x0,y0,x1,y1,0);
     cv::imwrite("polygonCut6.jpg", mat);
 
-
-
-    y0 = 300;
-    x0 = 0;
-    x1 = 300;
-    y1 = 0;
-    mat = cv::Mat(500,500, CV_8UC1,255);
-    x = std::vector<int>();
-    x.emplace_back(200);
-    x.emplace_back(200);
-    x.emplace_back(100);
-    x.emplace_back(100);
-    
-    
-    y = std::vector<int>();
-    y.emplace_back(100);
-    y.emplace_back(200);
-    
-    y.emplace_back(200);
-    y.emplace_back(100);
-    p = Polygon(x,y);
-    CyrusBeckClipLine(x0,y0,x1,y1,p);
-    drawPolygon<uchar>(mat,p,100);
-    drawLine<uchar>(mat,x0,y0,x1,y1,0);
-    cv::imwrite("polygonCut7.jpg", mat);
-
-    y0 = 0;
-    x0 = 300;
-    x1 = 0;
-    y1 = 300;
-    mat = cv::Mat(500,500, CV_8UC1,255);
-    x = std::vector<int>();
-    x.emplace_back(200);
-    x.emplace_back(200);
-    x.emplace_back(100);
-    x.emplace_back(100);
-    
-    
-    y = std::vector<int>();
-    y.emplace_back(100);
-    y.emplace_back(200);
-    
-    y.emplace_back(200);
-    y.emplace_back(100);
-    p = Polygon(x,y);
-    CyrusBeckClipLine(x0,y0,x1,y1,p);
-    drawPolygon<uchar>(mat,p,100);
-    drawLine<uchar>(mat,x0,y0,x1,y1,0);
-    cv::imwrite("polygonCut8.jpg", mat);
+   
 
 }

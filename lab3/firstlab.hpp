@@ -83,7 +83,7 @@ void drawHatchedLine(cv::Mat& mat, int x1,int y1, int x2, int y2, int len, int s
     const int deltaX = abs(x2 - x1);
     const int deltaY = abs(y2 - y1);
     int buf;
-    int is = 0;
+    
     if (deltaX>=deltaY && x1>x2){
         
         buf = x1;
@@ -114,18 +114,36 @@ void drawHatchedLine(cv::Mat& mat, int x1,int y1, int x2, int y2, int len, int s
     int errorDeletion = -2*std::max(deltaX,deltaY);
     int error= errorDeletion/2;
     
-   
+    int xl = x1;
+    int yl = y1;
+    int sz = len;
+    bool isSpace = false;
     while (x1!=x2 || y1!=y2)
-    {   if (is%(space + len)<len){
-            setPixel<T>(mat,-y1,x1,color);
+    {   
+        if ((x1-xl)*(x1 - xl) + (y1 - yl)*(y1 - yl) <=sz*sz){
+            if (!isSpace){
+                setPixel<T>(mat,-y1,x1,color);
+            }
+            
+        }else{
+            if (isSpace){
+                sz = len;
+                setPixel<T>(mat,-y1,x1,color);
+            }else{
+                sz = space;
+            }
+            xl = x1;
+            yl = y1;
+            isSpace = !isSpace;
         }
-        ++is;
+        
+        
         error +=errorAddition;
         if (error >= 0){
             error +=errorDeletion;
             x1+=xAddition;
             y1+=yAddition;
-            ++is;
+            //++is;
             
         }
         x1 +=xStep;
@@ -135,7 +153,7 @@ void drawHatchedLine(cv::Mat& mat, int x1,int y1, int x2, int y2, int len, int s
         
     }
     //std::cout<<error<<std::endl;
-    if (x1==x2 && y1 ==y2 && is%(space + len)<len){
+    if (x1==x2 && y1 ==y2 && !isSpace){
         setPixel(mat,-y1,x1,color);
     }
 }

@@ -5,22 +5,22 @@
 #include <vector>
 class Polygon3d{
     public:
-        std::vector<std::vector<int>> x;
+        std::vector<std::vector<float>> x;
         int length;
         int dims;
         Polygon3d(){
-            x = std::vector<std::vector<int>>();
+            x = std::vector<std::vector<float>>();
             
             this->length = 0;
             this->dims = 0;
         }
-        Polygon3d (std::vector<std::vector<int>> x_){
-            x = std::vector<std::vector<int>>();
-            std::vector<int> buf;
+        Polygon3d (std::vector<std::vector<float>> x_){
+            x = std::vector<std::vector<float>>();
+            std::vector<float> buf;
             this->length = x_.size();
             this ->dims = this->length>0?x_[0].size():0;
             for (int i =0; i<x_.size();++i){
-                buf = std::vector<int>();
+                buf = std::vector<float>();
                 for (int j = 0; j<dims;++j){
                     buf.emplace_back(x_[i][j]);
                 }
@@ -51,9 +51,16 @@ class Figure{
 
 void drawFigureOnZ(cv::Mat& mat, Figure f, uchar color){
     int n = f.up.x.size();
-    for (int i = 0; i<f.up.x.size();++i){
-        drawLine(mat,f.up.x[i][0],f.down.x[i][0],f.up.x[(i+1)%n][0],f.down.x[(i+1)%n][0],color);
+    for (int i = 0; i<n;++i){
+        drawLine(mat,f.up.x[i][0],f.up.x[i][1],f.down.x[i][0],f.down.x[i][1],color);
+        drawLine(mat,f.up.x[i][0],f.up.x[i][1],f.up.x[(i+1)%n][0],f.up.x[(i+1)%n][1],color);
+        drawLine(mat,f.down.x[i][0],f.down.x[i][1],f.down.x[(i+1)%n][0],f.down.x[(i+1)%n][1],color);
+
+
     }
+    
 }
+
+
 
 #endif
