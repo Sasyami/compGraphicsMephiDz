@@ -18,18 +18,51 @@ int CyrusBeckClipLine(double& x1, double& y1, double& x2, double& y2, Polygon p)
     double sx= x2-x1, sy= y2-y1;
     std::vector<int> px = p.x;
     std::vector<int> py = p.y;
-    
+    double ax,ay,bx,by,cx,cy,dx,dy;
     int n = (int)px.size();
     double nx, ny, denom, num, x1_new, y1_new, x2_new, y2_new;
     ClPointType orient;
+    bool hasIntersect= false;
     for (int i = 0; i<px.size();++i){
+        
         if (Classify(px[i], py[i], px[(i+1)%px.size()], py[(i+1)%px.size()], px[0],py[0]) == LEFT){
             orient = LEFT;
         }else{
             orient = RIGHT;
         }
+        double t11,t21;
+        ax = (p.x[i]);
+        ay = (p.y[i]);
+        bx = (p.x[(i+1)%p.x.size()]);
+        by = (p.y[(i+1)%p.x.size()]);
+        cx = x1;
+        cy = y1;
+        dx = x2;
+        dy = y2;
+        nx = dy - cy;
+        ny = -dx + cx;
+            if (nx*(bx -ax) + ny*(by-ay) == 0){
+                continue;
+            }else{
+                t11 = - (double)(nx*(ax-cx) + ny*(ay-cy))/(double)(nx*(bx -ax) + ny*(by-ay));
+            }
+            
+            nx = by - ay;
+            ny = -bx + ax;
+            if ((nx*(dx - cx) + ny*(dy - cy) ==0)){
+                continue;
+            }else{
+                t21= - (double)(nx* (cx -ax) + ny * (cy - ay))/(double)(nx*(dx - cx) + ny*(dy - cy));
+            }
+            
+            if ((t11>=0 && t11<=1) && (t21>=0 && t21<=1)){
+                hasIntersect = true;
+            }
     }
     
+    if (!hasIntersect){
+        return 0;
+    }
     for(int i = 0; i < n; i++) {
         nx= py[(i+1)%n]-py[i]; ny= px[i]-px[(i+1)%n]; 
         if (orient == RIGHT){

@@ -106,7 +106,6 @@ bool isSimple(Polygon p){
     
     return true;
 }
-//convT - type for multiplied and substracted values, if it can overflow T max value
 
 
 bool isConvex(Polygon p ){

@@ -162,7 +162,7 @@ int main(){
     y0 = 50;
     x0 = 100;
     x1 = 400;
-    y1 = 60;
+    y1 = 50;
 
     mat = cv::Mat(500,500, CV_8UC1,255);
     drawLine<uchar>(mat,x0,y0,x1,y1,200);
