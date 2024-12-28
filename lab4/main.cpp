@@ -241,6 +241,33 @@ int main(){
     drawLine<uchar>(mat,x0,y0,x1,y1,0);
     cv::imwrite("polygonCut6.jpg", mat);
 
+
+    y0 = 0;
+    x0 = 0;
+    x1 = 400;
+    y1 = 200;
+    mat = cv::Mat(500,500, CV_8UC1,255);
+    drawLine<uchar>(mat,x0,y0,x1,y1,200);
+    x = std::vector<int>();
+    x.emplace_back(200);
+    x.emplace_back(200);
+    x.emplace_back(100);
+    x.emplace_back(100);
+    
+    
+    y = std::vector<int>();
+    y.emplace_back(100);
+    y.emplace_back(200);
+    
+    y.emplace_back(200);
+    y.emplace_back(100);
+    p = Polygon(x,y);
+    CyrusBeckClipLine(x0,y0,x1,y1,p);
+   
+    drawPolygon<uchar>(mat,p,100);
+    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    cv::imwrite("polygonCut7.jpg", mat);
+
    
 
 }

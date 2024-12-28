@@ -51,7 +51,7 @@ int CyrusBeckClipLine(double& x1, double& y1, double& x2, double& y2, Polygon p)
         } 
         
     } 
-    std::cout<<t1<<" "<<t2<<std::endl;
+    //std::cout<<t1<<" "<<t2<<std::endl;
 
     if(t1 <= t2) { 
         
