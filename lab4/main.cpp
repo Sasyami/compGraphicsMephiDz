@@ -16,6 +16,7 @@ void drawDots(cv::Mat& mat, std::vector<int> x, std::vector<int> y, uchar color)
     
 }
 int main(){
+    int isIntersect;
     cv::Mat mat = cv::Mat(500,500, CV_8UC1,255);
     int m = 3;
     std::vector<int> x = std::vector<int>();
@@ -96,10 +97,12 @@ int main(){
     y.emplace_back(200);
     y.emplace_back(100);
     Polygon p(x,y);
-    CyrusBeckClipLine(x0,y0,x1,y1,p);
+    isIntersect = CyrusBeckClipLine(x0,y0,x1,y1,p);
    
     drawPolygon<uchar>(mat,p,100);
-    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    if (isIntersect!=0){
+        drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    }
     cv::imwrite("polygonCut1.jpg", mat);
 
 
@@ -124,10 +127,12 @@ int main(){
     y.emplace_back(200);
     y.emplace_back(100);
     p = Polygon(x,y);
-    CyrusBeckClipLine(x0,y0,x1,y1,p);
+    isIntersect = CyrusBeckClipLine(x0,y0,x1,y1,p);
    
     drawPolygon<uchar>(mat,p,100);
-    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    if (isIntersect!=0){
+        drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    }
     cv::imwrite("polygonCut2.jpg", mat);
 
 
@@ -151,10 +156,12 @@ int main(){
     y.emplace_back(200);
     y.emplace_back(100);
     p = Polygon(x,y);
-    CyrusBeckClipLine(x0,y0,x1,y1,p);
+    isIntersect = CyrusBeckClipLine(x0,y0,x1,y1,p);
    
     drawPolygon<uchar>(mat,p,100);
-    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    if (isIntersect!=0){
+        drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    }
     cv::imwrite("polygonCut3.jpg", mat);
 
 
@@ -180,10 +187,12 @@ int main(){
     y.emplace_back(200);
     y.emplace_back(100);
     p = Polygon(x,y);
-    CyrusBeckClipLine(x0,y0,x1,y1,p);
+    isIntersect = CyrusBeckClipLine(x0,y0,x1,y1,p);
    
     drawPolygon<uchar>(mat,p,100);
-    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    if (isIntersect!=0){
+        drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    }
     cv::imwrite("polygonCut4.jpg", mat);
 
 
@@ -208,10 +217,12 @@ int main(){
     y.emplace_back(200);
     y.emplace_back(100);
     p = Polygon(x,y);
-    CyrusBeckClipLine(x0,y0,x1,y1,p);
+    isIntersect = CyrusBeckClipLine(x0,y0,x1,y1,p);
    
     drawPolygon<uchar>(mat,p,100);
-    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    if (isIntersect!=0){
+        drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    }
     cv::imwrite("polygonCut5.jpg", mat);
 
 
@@ -235,10 +246,12 @@ int main(){
     y.emplace_back(200);
     y.emplace_back(100);
     p = Polygon(x,y);
-    CyrusBeckClipLine(x0,y0,x1,y1,p);
+    isIntersect = CyrusBeckClipLine(x0,y0,x1,y1,p);
    
     drawPolygon<uchar>(mat,p,100);
-    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    if (isIntersect!=0){
+        drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    }
     cv::imwrite("polygonCut6.jpg", mat);
 
 
@@ -262,10 +275,14 @@ int main(){
     y.emplace_back(200);
     y.emplace_back(100);
     p = Polygon(x,y);
-    CyrusBeckClipLine(x0,y0,x1,y1,p);
-   
+    
+    isIntersect = CyrusBeckClipLine(x0,y0,x1,y1,p);
+    
     drawPolygon<uchar>(mat,p,100);
-    drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    if (isIntersect!=0){
+        drawLine<uchar>(mat,x0,y0,x1,y1,0);
+    }
+    
     cv::imwrite("polygonCut7.jpg", mat);
 
    

@@ -8,7 +8,7 @@
 
 int main(){
     cv::Mat mat = cv::Mat(1000,1000, CV_8UC1,255);
-    drawHatchedLine<uchar>(mat, 100,100, 400, 300,30,30,0);
+    drawHatchedLine<uchar>(mat, 100,100, 400, 400,30,30,0);
     drawHatchedLine<uchar>(mat,100,100,400,100,30,30,0);
     cv::imwrite("hatchedline.png", mat);
     /* std::vector<int>a;

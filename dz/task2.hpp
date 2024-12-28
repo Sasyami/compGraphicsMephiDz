@@ -9,6 +9,7 @@
 #include "../lab4/firstlab.hpp"
 #include <cmath>
 
+#include "task1.hpp"
 
 
 void drawDuga(cv::Mat& mat, double xr, double yr, double r, double alpha, double beta, int color){
@@ -60,10 +61,10 @@ void drawDuga(cv::Mat& mat, double xr, double yr, double r, double alpha, double
         y.emplace_back(y1);
         y.emplace_back(y2);
         y.emplace_back(y3);
-        for (int i =0 ;i<y.size();++i){
-            std::cout<<x[i]<<","<<y[i]<<" ";
+        for (int i =0 ;i<y.size()-1;++i){
+            drawLine(mat,cv::Point2f(x[i],y[i]), cv::Point2f(x[(i+1)],y[i+1]));
         }
-        std::cout<<"\n"<<alpha<<" "<<beta1<<std::endl;;
+        
         Bezie(mat,x,y,3,(uchar) color);
         alpha = beta1;
         beta1 = std::max(beta, alpha - M_PI/2);

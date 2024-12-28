@@ -59,16 +59,16 @@ int main(){
 
     mat = cv::Mat(1000,1000, CV_8UC1,255);
     drawDuga(mat,500,500,200,M_PI/2, -M_PI/2,0);
-    cv::Point2f center = {500,(float)(mat.rows - 500)};
+    cv::Point2f center = {500,500};
     cv::circle(mat, center, 200, 125, 1);
     cv::imwrite("output2.png",mat);
 
 
 
-    mat = cv::Mat(500,500, CV_8UC1,255);
-    cv::Point2f center = {500,(float)(mat.rows - 500)};
+    mat = cv::Mat(1000,1000, CV_8UC1,255);
+    center = {500,500};
     cv::circle(mat, center, 200, 125, 1);
-    drawDuga(mat,100,150,100,M_PI, -M_PI,0);
+    drawDuga(mat,500,500,200,M_PI, -M_PI,0);
     cv::imwrite("output2Circle.png",mat);
     
     

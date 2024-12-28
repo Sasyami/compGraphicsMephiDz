@@ -27,7 +27,7 @@ int CyrusBeckClipLine(double& x1, double& y1, double& x2, double& y2, Polygon p)
         
         if (Classify(px[i], py[i], px[(i+1)%px.size()], py[(i+1)%px.size()], px[0],py[0]) == LEFT){
             orient = LEFT;
-        }else{
+        }else if (Classify(px[i], py[i], px[(i+1)%px.size()], py[(i+1)%px.size()], px[0],py[0]) == RIGHT){
             orient = RIGHT;
         }
         double t11,t21;
@@ -56,16 +56,25 @@ int CyrusBeckClipLine(double& x1, double& y1, double& x2, double& y2, Polygon p)
             }
             
             if ((t11>=0 && t11<=1) && (t21>=0 && t21<=1)){
+                //std::cout<<t11<<" "<<t21<<std::endl;
                 hasIntersect = true;
             }
     }
     
     if (!hasIntersect){
-        return 0;
+        
+        for (int i =0;i<n;++i){
+            //std::cout<<Classify(px[i],py[i], px[(i+1)%px.size()], py[(i+1)%px.size()], x1, y1)<<" "<<orient<<std::endl;
+            if (Classify(px[i],py[i], px[(i+1)%px.size()], py[(i+1)%px.size()], x1, y1) != orient){
+                return 0;
+            }
+        }
+
+        return 1;
     }
     for(int i = 0; i < n; i++) {
         nx= py[(i+1)%n]-py[i]; ny= px[i]-px[(i+1)%n]; 
-        if (orient == RIGHT){
+        if (orient == LEFT){
             nx *= -1;
             ny *= -1;
         }
@@ -110,7 +119,8 @@ int CyrusBeckClipLine(double& x1, double& y1, double& x2, double& y2, Polygon p)
         if (t2>=0){
             x2 = x1_new; y2 = y1_new;
         }
+        return 1;
     }
-    return 0; 
+    return 1; 
 }
 #endif
