@@ -13,7 +13,7 @@
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
                 "-I/usr/local/include/opencv4","-L/usr/local/lib","-I/usr/local/include/opencv4/highgui","-lopencv_imgcodecs",
-             "-lopencv_highgui", "-lopencv_features2d","-lopencv_core","-lopencv_imgproc"],
+             "-lopencv_highgui", "-lopencv_features2d","-lopencv_core","-lopencv_imgproc", "-lopencv_videoio"],
 
             "options": {
                 "cwd": "${fileDirname}"
