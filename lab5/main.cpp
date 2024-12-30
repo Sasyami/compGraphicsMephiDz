@@ -8,11 +8,12 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include "opencv2/videoio.hpp"
+#include "move.hpp"
 int main(){
     cv::Mat mat = cv::Mat(600,800, CV_8UC3,Scalar(255,255,255));
    
-    std::vector<std::vector<double>> up = {{150,150,50}, {200,200,0},{200,250,50},{150,200,100}, };
-    std::vector<std::vector<double>> down = {{250,100,100}, {300,150,50}, {300,200,100},{250,150,150}, };
+    std::vector<std::vector<double>> up = {{250,250,50}, {300,300,0},{300,350,50},{250,300,100}, };
+    std::vector<std::vector<double>> down = {{350,200,100}, {400,250,50}, {400,300,100},{350,250,150}, };
     Figure f = Figure(Polygon3d(up), Polygon3d(down));
     //drawFigureOnZ(mat,f,0);
     
@@ -40,28 +41,32 @@ int main(){
         drawVisibleFaces(mat,f);
         
         video.write(mat); 
-        if (i >= 100) break;
+        if (i >= 700) break;
         ++i;
     }
 
     video.release();
 
 
-    cv::VideoWriter video2("./rotating_parallelepiped_perspective2.avi", VideoWriter::fourcc('M', 'J', 'P', 'G'), 30, Size(500, 300));
+    cv::VideoWriter video2("./rotating_and_moving_parallelepiped_perspective2.avi", VideoWriter::fourcc('M', 'J', 'P', 'G'), 30, Size(900, 900));
     //VideoWriter video("rotating_parallelepiped_parallel.avi", VideoWriter::fourcc('M', 'J', 'P', 'G'), 30, Size(800, 600));
-    cv::Mat psp = perspectiveProjection(0.02);
+    //cv::Mat psp = perspectiveProjection(0.02);
     i =0;
+    double xMove = 0;
+    double yMove = 0;
+    double zMove = 1;
     while (true) {
-        mat = cv::Mat(300,500, CV_8UC3,Scalar(255,255,255));
+        mat = cv::Mat(900,900, CV_8UC3,Scalar(255,255,255));
         rm = createRotationMatrix(angle,rotationAxisX,rotationAxisY,rotationAxisZ);
-        auto up1 = transform(up,rm * psp);
-        auto down1 = transform(down,rm*psp);
+        cv::Mat mv= move(xMove*cos(angle),yMove*cos(angle),zMove*cos(angle));
+        auto up1 = transform(up,rm*resize(1+0.5*sin(angle)));
+        auto down1 = transform(down, rm*resize(1 + 0.5*sin(angle)));
         
         f = Figure(Polygon3d(up1), Polygon3d(down1));
         
         drawVisibleFaces(mat,f);
         video2.write(mat); 
-        if (i >= 100) break;
+        if (i >= 700) break;
         ++i;
         angle += 0.01f;
     }
