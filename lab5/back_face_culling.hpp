@@ -12,6 +12,54 @@
 #include <opencv2/imgproc/imgproc.hpp>
 using namespace cv;
 
+void SetPixel(Mat& img, int x, int y, int r, int g, int b) {
+    if (x >= 0 && x < img.cols && y >= 0 && y < img.rows)
+        img.at<Vec3b>(y, x) = Vec3b(r, g, b);
+}
+
+
+void Line(Mat& img, int x1, int y1, int x2, int y2, int color) {
+    int x = x1, y = y1;
+    int dx = x2 - x1, dy = y2 - y1;
+    int e, i;
+    int ix = (dx > 0) ? 1 : (dx < 0) ? -1 : 0;
+    if (ix == -1) dx = -dx;
+    int iy = (dy > 0) ? 1 : (dy < 0) ? -1 : 0;
+    if (iy == -1) dy = -dy;
+
+    auto setPixel = [&](int x, int y) {
+        int r = color & 0xFF;
+        int g = (color >> 8) & 0xFF;
+        int b = (color >> 16) & 0xFF;
+        SetPixel(img, x, y, r, g, b);
+    };
+
+    if (dx >= dy) {
+        e = 2 * dy - dx;
+        for (i = 0; i <= dx; i++) {
+            setPixel(x, y);
+            if (e >= (iy >= 0 ? 0 : 1)) {
+                y += iy;
+                e -= 2 * dx;
+            }
+            x += ix;
+            e += dy * 2;
+        }
+    }
+    else {
+        e = 2 * dx - dy;
+        for (i = 0; i <= dy; i++) {
+            setPixel(x, y);
+            if (e >= (ix >= 0 ? 0 : 1)) {
+                x += ix;
+                e -= 2 * dy;
+            }
+            y += iy;
+            e += dx * 2;
+        }
+    }
+}
+
 std::vector<Polygon3d> getPolygons(Figure f){
     auto out = std::vector<Polygon3d>();
     out.emplace_back(f.up);
@@ -19,7 +67,7 @@ std::vector<Polygon3d> getPolygons(Figure f){
     int n = f.up.x.size();
     for (int i = 0; i<n;++i){
         
-        std::vector<std::vector<float>> vpol = std::vector<std::vector<float>>();
+        std::vector<std::vector<double>> vpol = std::vector<std::vector<double>>();
         vpol.emplace_back(f.down.x[i]);
         vpol.emplace_back(f.down.x[(i+1)%n]);
         
@@ -34,7 +82,7 @@ std::vector<Polygon3d> getPolygons(Figure f){
 
 void drawPolygonZ(Mat& mat, const Polygon3d& pol){
     for (int i = 0; i<pol.x.size();++i){
-        drawLine<uchar>(mat,pol.x[i][0], pol.x[i][1], pol.x[(i+1)%pol.x.size()][0], pol.x[(i+1)%pol.x.size()][1], 0);
+        Line(mat,pol.x[i][0], pol.x[i][1], pol.x[(i+1)%pol.x.size()][0], pol.x[(i+1)%pol.x.size()][1], 0xB4A7D6);
     }
 }
 void drawVisibleFaces(Mat& mat, Figure figure) {

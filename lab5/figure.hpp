@@ -5,22 +5,22 @@
 #include <vector>
 class Polygon3d{
     public:
-        std::vector<std::vector<float>> x;
+        std::vector<std::vector<double>> x;
         int length;
         int dims;
         Polygon3d(){
-            x = std::vector<std::vector<float>>();
+            x = std::vector<std::vector<double>>();
             
             this->length = 0;
             this->dims = 0;
         }
-        Polygon3d (std::vector<std::vector<float>> x_){
-            x = std::vector<std::vector<float>>();
-            std::vector<float> buf;
+        Polygon3d (std::vector<std::vector<double>> x_){
+            x = std::vector<std::vector<double>>();
+            std::vector<double> buf;
             this->length = x_.size();
             this ->dims = this->length>0?x_[0].size():0;
             for (int i =0; i<x_.size();++i){
-                buf = std::vector<float>();
+                buf = std::vector<double>();
                 for (int j = 0; j<dims;++j){
                     buf.emplace_back(x_[i][j]);
                 }
